@@ -9,11 +9,11 @@ Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork ch
 * does bookwork checks.
 
 ## Setup
-
+*
 
 
 ## Bugs
-* Chromedriver needs updating about twice every month, you can download it here https://chromedriver.chromium.org/downloads
+* Chromedriver needs updating about twice every month, you can download it [here](https://chromedriver.chromium.org/downloads)
 * Sometimes Auto Bookwork checks may not work (due to how fractions are displayed). 
-* 
+* Make Sure that the .exe or .py file are in the same directory as the **Logs** file.
 ## Logging
