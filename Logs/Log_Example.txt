@@ -1,0 +1,20 @@
+[SPARX BWK LOGS]
+[START TIME] (date)
+[Logged In] True
+--- [SETTINGS] --- 
+[USER] (username)
+[PASSWORD] (password)
+[AUTOCONTINUE] True
+[AUTOBWC] True
+[IS-SAVED] True
+[VERSION] 1.2
+--- [WORK LOGS] --- 
+17:11:42 [LOG] Writing New Log
+17:11:42 [LOG] New Log Made [NAME] (date)
+17:11:42 [SETTINGS] Loading settings. This may take some time
+17:11:48 [MAIN] If chrome fails to open. install the newest version of chromedriver.
+17:11:53 [MAIN] Chrome Version: 103.0.5060.66
+
+17:12:55 [BWK] Bookwork code: M29 [ANSWER] 9
+17:13:10 [BWK] Bookwork code: N39 [ANSWER] {x=10}
+17:19:55 [BWK] Bookwork code: C20 [ANSWER] Pepper
