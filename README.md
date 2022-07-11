@@ -20,7 +20,7 @@ Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork ch
 If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is becaues of **Selenium Webdirver**.
 
 For some reason, Selenium will crash if it can't find an element. This means that to avoid crashing i have to use try-excepts, like this:
-```
+``` python
 try:
   kp = driver.find_element_by_class_name('number-input')
   if kp.get_attribute("value") != "":
