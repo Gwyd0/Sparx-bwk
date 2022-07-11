@@ -16,4 +16,14 @@ Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork ch
 * Chromedriver needs updating about twice every month, you can download it [here](https://chromedriver.chromium.org/downloads)
 * Sometimes Auto Bookwork checks may not work (due to how fractions are displayed). 
 * Make Sure that the .exe or .py file are in the same directory as the **Logs** file.
-## Why so many **Try and excepts**
+## Why so many Try and excepts?
+If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is becaues of **chromedriver**.
+
+For some reason, Chromedriver will crash if it can't find an element This means that to avoid crashing i have to use try and excepts. Like this:
+```
+try:
+  kp = driver.find_element_by_class_name('number-input')
+  if kp.get_attribute("value") != "":
+    log("[BWK] " + BWK.text + " [ANSWER] " + kp.get_attribute("value"))
+except:
+```
