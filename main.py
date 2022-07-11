@@ -124,10 +124,7 @@ def start():
         log("[SETTINGS] Loading settings. This may take some time")
 
     driver = webdriver.Chrome(info.PATH)
-    driver.get("https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=ad6ebaa5-6e59-4e31-9840"
-               "-d14daad3bf03&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback"
-               "&response_type=code&scope=openid+profile+email&state=-Gf6O5LrRF06ewfflb"
-               "-6BwO7VgGjudj_LRkJeMZlnumzrnKLvu9ERDZdiBsIJvXKwOs6N6f39bssaU0HoaVsjZVdQ1S8KBvFxCMrnBBoCvQ7hWic_okVhmNeNBJfHhIzDPdQXGP9i0q-g4JzQxJsaucIW2Q22niy9t2r-T2BT9qVuwkujpGu9S203yvO80kpD5Rz0AM06qyGe5eDTShAXtbELago3LG_DFesTEHYFV-gRXjGv--lAERlN8gInjhGjmE%3D")
+    driver.get("https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw")
 
     log("[MAIN] If chrome fails to open. install the newest version of chromedriver.")
 
