@@ -1,5 +1,5 @@
 # Sparx-bwk
-###Sparx-Bookwork-Code is a project ive been working on for about a year (mostly a hobby).
+Sparx-Bookwork-Code is a project ive been working on for about a year (mostly a hobby).
 
 Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks. It uses chromedriver (google chrome) to grab the values of answers and codes. I chose to use python as its my main launguage and is easy to understand.
 
