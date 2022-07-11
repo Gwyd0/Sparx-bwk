@@ -17,9 +17,9 @@ Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork ch
 * Sometimes Auto Bookwork checks may not work (due to how fractions are displayed). 
 * Make Sure that the .exe or .py file are in the same directory as the **Logs** file.
 ## Why so many Try and excepts?
-If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is becaues of **chromedriver**.
+If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is becaues of **Selenium Webdirver**.
 
-For some reason, Chromedriver will crash if it can't find an element This means that to avoid crashing i have to use try and excepts. Like this:
+For some reason, Selenium will crash if it can't find an element. This means that to avoid crashing i have to use try-excepts, like this:
 ```
 try:
   kp = driver.find_element_by_class_name('number-input')
@@ -27,3 +27,4 @@ try:
     log("[BWK] " + BWK.text + " [ANSWER] " + kp.get_attribute("value"))
 except:
 ```
+and.. as i check for mutiple elements, the result is alot of try-excepts.
