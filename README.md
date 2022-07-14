@@ -1,5 +1,5 @@
 # Sparx-bwk
-**Sparx-Bookwork-Code** is a project ive been working on for about a year (mostly as a hobby).
+**Sparx-Bookwork-Code** is a project ive been working on for about a year (mostly as a hobby and because im lazy).
 
 Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/en/knowledge/what-is-a-bookwork-check-and-why-are-they-used-in-sparx)). It uses chromedriver (google chrome) to grab the values of answers and codes. I chose to use python as its my main launguage and is easy to understand.
 
@@ -9,7 +9,7 @@ Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork ch
 * does bookwork checks.
 
 ## Setup
-This only works for chrome so make sure you have chrome installed.
+This only works for **chrome** so make sure you have **chrome installed**.
 ### Windows
 Simply, download the code and run the .exe
 You may have to update Chromedriver as explained below.
@@ -30,4 +30,4 @@ try:
     log("[BWK] " + BWK.text + " [ANSWER] " + kp.get_attribute("value"))
 except:
 ```
-and.. as i check for mutiple elements, the result is alot of try-excepts.
+and.. as i check for multiple elements, the result is a lot of try-excepts.
