@@ -9,12 +9,10 @@ Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork ch
 * does bookwork checks.
 
 ## Setup
-### Linux
-
+This only works for chrome so make sure you have chrome installed.
 ### Windows
 Simply, download the code and run the .exe
-You may have to update Chromedriver as explained below, or
-
+You may have to update Chromedriver as explained below.
 
 ## Bugs
 * Chromedriver needs updating about twice every month, you can download it [here](https://chromedriver.chromium.org/downloads), Download the same version
@@ -22,7 +20,7 @@ as your browser. then place chromedriver.exe in the same directory as the .exe o
 * Sometimes Auto Bookwork checks may not work (due to how fractions are displayed). 
 * Make Sure that the .exe or .py file are in the same directory as the **Logs** file.
 ## Why so many Try and excepts?
-If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is becaues of **Selenium Webdirver**.
+If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is because of **Selenium Webdirver**.
 
 For some reason, Selenium will crash if it can't find an element. This means that to avoid crashing i have to use try-excepts, like this:
 ``` python
