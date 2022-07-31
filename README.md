@@ -1,4 +1,4 @@
-# Sparx Cheats
+# Sparx-BWK
 **Sparx-Bookwork-Code** is a project ive been working on for about a year (mostly as a hobby and because im lazy).
 
 Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/en/knowledge/what-is-a-bookwork-check-and-why-are-they-used-in-sparx)). It uses chromedriver (google chrome) to grab the values of answers and codes. I use python as its my main launguage and is quite easy to understand.
