@@ -1,12 +1,15 @@
 # Sparx-bwk
 **Sparx-Bookwork-Code** is a project ive been working on for about a year (mostly as a hobby and because im lazy).
 
-Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/en/knowledge/what-is-a-bookwork-check-and-why-are-they-used-in-sparx)). It uses chromedriver (google chrome) to grab the values of answers and codes. I chose to use python as its my main launguage and is easy to understand.
+Its a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/en/knowledge/what-is-a-bookwork-check-and-why-are-they-used-in-sparx)). It uses chromedriver (google chrome) to grab the values of answers and codes. I use to use python as its my main launguage and is quite easy to understand.
 
-## Features
+As i have stoped using sparx, its no use to me anymore so having it here may help anybody who wants to automate their Sparx math homework.
+
+## Basic features
 * auto fills in password + username
 * logs bwc's for every question
 * does bookwork checks.
+* creates a full backup log as a .txt in /logs
 
 ## Setup
 This only works for **chrome** so make sure you have **chrome installed**.
