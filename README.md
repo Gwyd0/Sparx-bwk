@@ -7,8 +7,8 @@ As i have stoped using sparx, its no use to me anymore so having it here may hel
 
 ## Basic features
 * auto fills in password + username
-* logs bwc's for every question
-* does bookwork checks.
+* logs codes for every question
+* auto does bookwork checks.
 * creates a full backup log as a .txt in /logs
 
 ## Setup
