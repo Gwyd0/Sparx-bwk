@@ -14,7 +14,7 @@ As i have stoped using sparx, its no use to me anymore so having it here may hel
 ## Setup
 This only works for **chrome** so make sure you have **chrome installed**.
 ### Windows
-Simply, download the code and run the .exe
+Simply, clone the repo and run the .exe
 You may have to update Chromedriver as explained below.
 
 ## Bugs
