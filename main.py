@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from datetime import datetime
 import time
 import json
@@ -7,11 +8,12 @@ import json
 FILE_NAME = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
 CODES = []
 
+
 class info:
     USERNAME = ""
     PASSWORD = ""
-    PATH = 'chromedriver.exe' # path to chromedriver
-    VERSION = '1.2'
+    PATH = 'chromedriver.exe'  # path to chromedriver
+    VERSION = '1.3'
 
     lastmsg = ""
     isopen = True
@@ -26,38 +28,41 @@ def log(message):
     current_time = time.strftime("%H:%M:%S", t)
     try:
         f = open("logs/Log_{0}.txt".format(FILE_NAME), "a")
-        f.write("{0} {1} \n".format(str(current_time),message))
+        f.write("{0} {1} \n".format(str(current_time), str(message)))
         f.close()
     except:
         log("[ERROR] 3 - Failed to log")
+        return
 
     print(current_time + " " + message)
     info.lastmsg = message
+    return
 
 
 def savesettings():
     info.USERNAME = input("[SETTINGS] Please enter your sparx username: ")
     info.PASSWORD = input("[SETTINGS] Please enter your sparx password: ")
-    text1 = input("[SETTINGS] Do You want Autocontinue On? (skips games): ").casefold()
-    text2 = input("[SETTINGS] Do You want Autobwk On? (Does Bookwork CODES may fail): ").casefold()
-    text3 = input("[SETTINGS] Save Settings?: ").casefold()
+    INPUT1 = input("[SETTINGS] Do You want Autocontinue On? (skips games): ").casefold()
+    INPUT2 = input("[SETTINGS] Do You want Autobwk On? (Does Bookwork CODES may fail): ").casefold()
+    INPUT3 = input("[SETTINGS] Save Settings?: ").casefold()
 
-    if text1 == "true" or text1 == "yes":
+    if INPUT1 == "true" or INPUT1 == "yes":
         info.autocontinue = True
         print("[SETTINGS] autocontinue enabled")
-    elif text2 == "true" or text2 == "yes":
+    if INPUT2 == "true" or INPUT2 == "yes":
         info.autobwk = True
         print("[SETTINGS] autobwk enabled")
-    elif text3 == "true" or text3 == "yes":
+    if INPUT3 == "true" or INPUT3 == "yes":
         print("[SETTINGS] saving settings. This may take some time")
-        
-        data = {'settings': [{'USERNAME': info.USERNAME, 'PASSWORD': info.PASSWORD, 'acon': info.autocontinue, 'abwk': info.autobwk}]}
+
+        data = {'settings': [
+            {'USERNAME': info.USERNAME, 'PASSWORD': info.PASSWORD, 'acon': info.autocontinue, 'abwk': info.autobwk}]}
         with open('Logs/settings.json', 'w') as outfile:
             json.dump(data, outfile)
         return
     else:
         print("[Error] Invalid argument")
-        exit
+        exit()
 
 
 def loadsettings():
@@ -65,8 +70,8 @@ def loadsettings():
         with open('Logs/settings.json') as json_file:
             data = json.load(json_file)
             print("[SETTINGS] Loading settings. This may take some time")
-            info.USERNAME = data['settings'][0]['USERNAME']
-            info.PASSWORD = data['settings'][0]['PASSWORD']
+            info.USERNAME = data['settings'][0]['un']
+            info.PASSWORD = data['settings'][0]['pw']
             info.autocontinue = data['settings'][0]['acon']
             info.autobwk = data['settings'][0]['abwk']
             return True
@@ -77,9 +82,12 @@ def loadsettings():
 
 def makelogfile():
     try:
+        
         f = open("logs/Log_{0}.txt".format(FILE_NAME), "a")
-        f.write("[SPARX BWK LOGS]\n[START TIME] {0}\n[Logged In] {1} \n--- [SETTINGS] --- \n[USER] {2}\n[PASSWORD] {3}\n[AUTOCONTINUE] {4}\n[AUTOBWC] {5}\n[IS-SAVED] {6}\n[VERSION] {7}\n--- [WORK LOGS] --- \n" .format(
-            FILE_NAME,str(info.loggedin),info.USERNAME,info.PASSWORD,str(info.autocontinue),str(info.autobwk),str(info.isaved),info.VERSION))
+        f.write(
+            "[SPARX BWK LOGS]\n[START TIME] {0}\n--- [SETTINGS] --- \n[USER] {1}\n[PASSWORD] {2}\n["
+            "AUTOCONTINUE] {3}\n[AUTOBWC] {4}\n[VERSION] {5}\n--- [WORK LOGS] --- \n".format(
+                FILE_NAME, info.USERNAME, info.PASSWORD, str(info.autocontinue), str(info.autobwk), info.VERSION))
         f.close()
         log("[LOG] Writing New Log")
         log("[LOG] New Log Made [NAME] " + FILE_NAME)
@@ -90,60 +98,58 @@ def makelogfile():
 
 
 def start():
-    print(" ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄       ▄       ▄▄▄▄▄▄▄▄▄▄   ▄         ▄  ▄    ▄  \n""▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌     ▐░▌     ▐░░░░░░░░░░▌ ▐░▌       ▐░▌▐░▌  ▐░▌ \n""▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀█░▌ ▐░▌   ▐░▌      ▐░█▀▀▀▀▀▀▀█░▌▐░▌       ▐░▌▐░▌ ▐░▌  \n""▐░▌          ▐░▌       ▐░▌▐░▌       ▐░▌▐░▌       ▐░▌  ▐░▌ ▐░▌       ▐░▌       ▐░▌▐░▌       ▐░▌▐░▌▐░▌   \n""▐░█▄▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌   ▐░▐░▌        ▐░█▄▄▄▄▄▄▄█░▌▐░▌   ▄   ▐░▌▐░▌░▌    \n""▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌    ▐░▌         ▐░░░░░░░░░░▌ ▐░▌  ▐░▌  ▐░▌▐░░▌     \n"" ▀▀▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀█░█▀▀    ▐░▌░▌        ▐░█▀▀▀▀▀▀▀█░▌▐░▌ ▐░▌░▌ ▐░▌▐░▌░▌    \n""          ▐░▌▐░▌          ▐░▌       ▐░▌▐░▌     ▐░▌    ▐░▌ ▐░▌       ▐░▌       ▐░▌▐░▌▐░▌ ▐░▌▐░▌▐░▌▐░▌   \n"" ▄▄▄▄▄▄▄▄▄█░▌▐░▌          ▐░▌       ▐░▌▐░▌      ▐░▌  ▐░▌   ▐░▌      ▐░█▄▄▄▄▄▄▄█░▌▐░▌░▌   ▐░▐░▌▐░▌ ▐░▌  \n""▐░░░░░░░░░░░▌▐░▌          ▐░▌       ▐░▌▐░▌       ▐░▌▐░▌     ▐░▌     ▐░░░░░░░░░░▌ ▐░░▌     ▐░░▌▐░▌  ▐░▌ \n"" ▀▀▀▀▀▀▀▀▀▀▀  ▀            ▀         ▀  ▀         ▀  ▀       ▀       ▀▀▀▀▀▀▀▀▀▀   ▀▀       ▀▀  ▀    ▀  \nBy Gwyd0  VERSION." + info.VERSION)
-    
-    if not loadsettings(): # if loadsettings returns false then savesettings for next time.
+    print("By Gwyd0  VERSION." + info.VERSION)
+    if not loadsettings():  # if loadsettings returns false then savesettings for next time.
         savesettings()
 
     makelogfile()
 
-    driver = webdriver.Chrome(info.PATH)
-    driver.get("https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw")
+    DRIVER = webdriver.Chrome(info.PATH)
+    DRIVER.get("https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=ad6ebaa5-6e59-4e31-9840-d14daad3bf03&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback&response_type=code&scope=openid+profile+email&state=aEeScyZU4UJbK7UwJ9lVwQRFTPfTAQDFPqgngzPBR2GMxzlTw0lrajfG85yGLaCKyB0bOQxuLDCSSoccNiDnHdNkkAvbL6zYMc21Q8UOMAILV60eRzCmAkI5EuMxywmaxejArNkS4CK0l85omVBvDjBXpJMbNlTb0j6UPajHd4z8EnpTXmC6jD-KbDSLbU-ykoN_dt8k26joQJSq9dls8u4XczPi5RvfC81y8KNSIfxXDOjKdYgXuCObo1gYNUdPcww%3D")
 
-    USERNAME_ELEMENT = driver.find_element_by_id("username")
-    PASSWORD_ELEMENT = driver.find_element_by_id("password")
+    USERNAME_ELEMENT = DRIVER.find_element_by_id("username")
+    PASSWORD_ELEMENT = DRIVER.find_element_by_id("password")
 
     USERNAME_ELEMENT.send_keys(info.USERNAME)
     PASSWORD_ELEMENT.send_keys(info.PASSWORD)
     PASSWORD_ELEMENT.send_keys(Keys.RETURN)
 
-    log("[MAIN] Chrome Version: " + str(driver.capabilities['browserVersion']))
+    log("[MAIN] Chrome Version: " + str(DRIVER.capabilities['browserVersion']))
     log("[MAIN] If chrome fails to open. install the newest version of chromedriver.")
+
     try:
-        mainloop(driver)
+        mainloop(DRIVER)
     except:
         log("[MAIN] Chrome Closed. Exiting.")
         info.isopen = False
         exit()
 
 
-
 def mainloop(driver):
     while info.isopen:
-        if driver.find_element_by_class_name("location-title").text != "Homework":
+        if "Sparx" in driver.title:
             try:
-                BWK = driver.find_element_by_xpath('//*[@id="top-bar"]/div/div[1]/span')
+                BWK = driver.find_element(By.CLASS_NAME, 'bookwork-code')
                 try:
                     kp = driver.find_element_by_class_name('number-input')
+
                     if kp.get_attribute("value") != "":
                         log("[BWK] " + BWK.text + " [ANSWER] " + kp.get_attribute("value"))
-                        #CODES.append(BWK.text + "/" + kp.get_attribute("value")) for auto checks
                 except:
-                    try:
-                        sl = driver.find_element_by_class_name('selected')
-                        if sl.text != "" and not "answer" in sl.text:
-                            log("[BWK] " + BWK.text + " [ANSWER] " + sl.text)
-                    except:
-                        try:
-                            if info.autocontinue:
-                                a = driver.find_element_by_class_name('button-text')
-                                if a.text == "Continue":
-                                    a.click()
-                                b = driver.find_element_by_class_name('alert-button')
-                                if b.text == "Continue":
-                                    a.click()
-                        except:
-                            d = 0
+                    d = 9
+                try:
+                    sl = driver.find_element_by_class_name('selected')
+
+                    if sl.text != "" and not "answer" in sl.text:
+                        log("[BWK] " + BWK.text + " [ANSWER] " + sl.text)
+                except:
+                    if info.autocontinue:
+                        a = driver.find_element(By.CLASS_NAME, "button-text")
+                        b = driver.find_element(By.CLASS_NAME, "button-text")
+                        if a.text == "Continue" or a.text == "Second chance":
+                            a.click()
+                        elif b.text == "Continue":
+                            b.click()
             except:
                 d = 1
 
