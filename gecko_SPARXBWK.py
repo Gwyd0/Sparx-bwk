@@ -67,26 +67,14 @@ def savesettings():
 
 def loadsettings():
     try:
-        setting = input("[SETTINGS] 1 a, 2 i, 3 g: ").casefold()
-        if setting == "3" or setting == "g":
-            with open('Logs/settings.json') as json_file:
-                data = json.load(json_file)
-                print("[SETTINGS] Loading settings. This may take some time")
-                info.USERNAME = data['settings'][0]['USERNAME']
-                info.PASSWORD = data['settings'][0]['PASSWORD']
-                info.autocontinue = data['settings'][0]['acon']
-                info.autobwk = data['settings'][0]['abwk']
-                return True
-        elif setting == "2" or setting == "i":
-            info.USERNAME = "isaacdisney"
-            info.PASSWORD = "bear74wave"
+        with open('Logs/settings.json') as json_file:
+            data = json.load(json_file)
+            print("[SETTINGS] Loading settings. This may take some time")
+            info.USERNAME = data['settings'][0]['USERNAME']
+            info.PASSWORD = data['settings'][0]['PASSWORD']
+            info.autocontinue = data['settings'][0]['acon']
+            info.autobwk = data['settings'][0]['abwk']
             return True
-        else:
-            info.USERNAME = "adamlovejoy"
-            info.PASSWORD = "barn97crow"
-            return True
-
-
     except:
         return False
 
