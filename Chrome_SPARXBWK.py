@@ -13,7 +13,7 @@ class info:
     USERNAME = ""
     PASSWORD = ""
     PATH = 'chromedriver.exe'  # path to chromedriver
-    VERSION = '1.3'
+    VERSION = '1.3 - Chrome'
 
     lastmsg = ""
     isopen = True
@@ -22,21 +22,17 @@ class info:
 
 
 def log(message):
-    if info.lastmsg == message:
+    if info.lastmsg == message or len(message) < 34:
         return
-    t = time.localtime()
-    current_time = time.strftime("%H:%M:%S", t)
-    try:
-        f = open("logs/Log_{0}.txt".format(FILE_NAME), "a")
+    else:
+        t = time.localtime()
+        current_time = time.strftime("%H:%M:%S ", t)
+        f = open("Logs/Log_{0}.txt".format(FILE_NAME), "a")
         f.write("{0} {1} \n".format(str(current_time), str(message)))
         f.close()
-    except:
-        log("[ERROR] 3 - Failed to log")
+        print(current_time + message)
+        info.lastmsg = message
         return
-
-    print(current_time + " " + message)
-    info.lastmsg = message
-    return
 
 
 def savesettings():
@@ -70,20 +66,19 @@ def loadsettings():
         with open('Logs/settings.json') as json_file:
             data = json.load(json_file)
             print("[SETTINGS] Loading settings. This may take some time")
-            info.USERNAME = data['settings'][0]['un']
-            info.PASSWORD = data['settings'][0]['pw']
+            info.USERNAME = data['settings'][0]['USERNAME']
+            info.PASSWORD = data['settings'][0]['PASSWORD']
             info.autocontinue = data['settings'][0]['acon']
             info.autobwk = data['settings'][0]['abwk']
             return True
-
     except:
         return False
 
 
 def makelogfile():
     try:
-        
-        f = open("logs/Log_{0}.txt".format(FILE_NAME), "a")
+
+        f = open("Logs/Log_{0}.txt".format(FILE_NAME), "a")
         f.write(
             "[SPARX BWK LOGS]\n[START TIME] {0}\n--- [SETTINGS] --- \n[USER] {1}\n[PASSWORD] {2}\n["
             "AUTOCONTINUE] {3}\n[AUTOBWC] {4}\n[VERSION] {5}\n--- [WORK LOGS] --- \n".format(
@@ -103,25 +98,26 @@ def start():
         savesettings()
 
     makelogfile()
-
+    log("[MAIN] If Chrome fails to open. Install the newest version of Chromedriver.")
     DRIVER = webdriver.Chrome(info.PATH)
-    DRIVER.get("https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=ad6ebaa5-6e59-4e31-9840-d14daad3bf03&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback&response_type=code&scope=openid+profile+email&state=aEeScyZU4UJbK7UwJ9lVwQRFTPfTAQDFPqgngzPBR2GMxzlTw0lrajfG85yGLaCKyB0bOQxuLDCSSoccNiDnHdNkkAvbL6zYMc21Q8UOMAILV60eRzCmAkI5EuMxywmaxejArNkS4CK0l85omVBvDjBXpJMbNlTb0j6UPajHd4z8EnpTXmC6jD-KbDSLbU-ykoN_dt8k26joQJSq9dls8u4XczPi5RvfC81y8KNSIfxXDOjKdYgXuCObo1gYNUdPcww%3D")
+    DRIVER.get(
+        "https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=ad6ebaa5-6e59-4e31-9840-d14daad3bf03&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback&response_type=code&scope=openid+profile+email&state=aEeScyZU4UJbK7UwJ9lVwQRFTPfTAQDFPqgngzPBR2GMxzlTw0lrajfG85yGLaCKyB0bOQxuLDCSSoccNiDnHdNkkAvbL6zYMc21Q8UOMAILV60eRzCmAkI5EuMxywmaxejArNkS4CK0l85omVBvDjBXpJMbNlTb0j6UPajHd4z8EnpTXmC6jD-KbDSLbU-ykoN_dt8k26joQJSq9dls8u4XczPi5RvfC81y8KNSIfxXDOjKdYgXuCObo1gYNUdPcww%3D")
 
-    USERNAME_ELEMENT = DRIVER.find_element_by_id("username")
-    PASSWORD_ELEMENT = DRIVER.find_element_by_id("password")
+    USERNAME_ELEMENT = DRIVER.find_element(By.ID, "username")
+    PASSWORD_ELEMENT = DRIVER.find_element(By.ID, "password")
 
     USERNAME_ELEMENT.send_keys(info.USERNAME)
     PASSWORD_ELEMENT.send_keys(info.PASSWORD)
     PASSWORD_ELEMENT.send_keys(Keys.RETURN)
 
     log("[MAIN] Chrome Version: " + str(DRIVER.capabilities['browserVersion']))
-    log("[MAIN] If chrome fails to open. install the newest version of chromedriver.")
 
     try:
         mainloop(DRIVER)
     except:
         log("[MAIN] Chrome Closed. Exiting.")
         info.isopen = False
+        input("Exit to continue.")
         exit()
 
 
@@ -131,14 +127,14 @@ def mainloop(driver):
             try:
                 BWK = driver.find_element(By.CLASS_NAME, 'bookwork-code')
                 try:
-                    kp = driver.find_element_by_class_name('number-input')
+                    kp = driver.find_element(By.CLASS_NAME, 'number-input')
 
                     if kp.get_attribute("value") != "":
                         log("[BWK] " + BWK.text + " [ANSWER] " + kp.get_attribute("value"))
                 except:
                     d = 9
                 try:
-                    sl = driver.find_element_by_class_name('selected')
+                    sl = driver.find_element(By.CLASS_NAME, 'selected')
 
                     if sl.text != "" and not "answer" in sl.text:
                         log("[BWK] " + BWK.text + " [ANSWER] " + sl.text)
