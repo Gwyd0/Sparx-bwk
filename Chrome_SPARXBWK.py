@@ -9,11 +9,31 @@ FILE_NAME = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
 CODES = []
 
 
+class bcolors:
+    # stolen from blender build script lmaoo
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+class tags:
+    error = bcolors.FAIL + "[ERROR] " + bcolors.ENDC
+    main = bcolors.HEADER + "[MAIN] " + bcolors.ENDC
+    log = "[LOG] "
+    settings = "[SETTINGS] "
+
+
 class info:
     USERNAME = ""
     PASSWORD = ""
     PATH = 'chromedriver.exe'  # path to chromedriver
-    VERSION = '1.3 - Chrome'
+    VERSION = '1.4 - Chrome - Win64'
 
     lastmsg = ""
     isopen = True
@@ -36,20 +56,20 @@ def log(message):
 
 
 def savesettings():
-    info.USERNAME = input("[SETTINGS] Please enter your sparx username: ")
-    info.PASSWORD = input("[SETTINGS] Please enter your sparx password: ")
-    INPUT1 = input("[SETTINGS] Do You want Autocontinue On? (skips games): ").casefold()
-    INPUT2 = input("[SETTINGS] Do You want Autobwk On? (Does Bookwork CODES may fail): ").casefold()
-    INPUT3 = input("[SETTINGS] Save Settings?: ").casefold()
+    info.USERNAME = input(tags.log + "Please enter your sparx username: ")
+    info.PASSWORD = input(tags.log + "Please enter your sparx password: ")
+    INPUT1 = input(tags.log + "Do You want Autocontinue On? (skips games): ").casefold()
+    INPUT2 = input(tags.log + "Do You want Autobwk On? (Does Bookwork CODES may fail): ").casefold()
+    INPUT3 = input(tags.log + "Save Settings?: ").casefold()
 
     if INPUT1 == "true" or INPUT1 == "yes":
         info.autocontinue = True
-        print("[SETTINGS] autocontinue enabled")
+        print(tags.log + "autocontinue enabled")
     if INPUT2 == "true" or INPUT2 == "yes":
         info.autobwk = True
-        print("[SETTINGS] autobwk enabled")
+        print(tags.log + "autobwk enabled")
     if INPUT3 == "true" or INPUT3 == "yes":
-        print("[SETTINGS] saving settings. This may take some time")
+        print(tags.log + "saving settings. This may take some time")
 
         data = {'settings': [
             {'USERNAME': info.USERNAME, 'PASSWORD': info.PASSWORD, 'acon': info.autocontinue, 'abwk': info.autobwk}]}
@@ -57,15 +77,16 @@ def savesettings():
             json.dump(data, outfile)
         return
     else:
-        print("[Error] Invalid argument")
-        exit()
+        print(tags.error + "Invalid argument")
+        info.isopen = False
+        return
 
 
 def loadsettings():
     try:
         with open('Logs/settings.json') as json_file:
             data = json.load(json_file)
-            print("[SETTINGS] Loading settings. This may take some time")
+            print(tags.log + "Loading settings. This may take some time")
             info.USERNAME = data['settings'][0]['USERNAME']
             info.PASSWORD = data['settings'][0]['PASSWORD']
             info.autocontinue = data['settings'][0]['acon']
@@ -77,28 +98,27 @@ def loadsettings():
 
 def makelogfile():
     try:
-
         f = open("Logs/Log_{0}.txt".format(FILE_NAME), "a")
         f.write(
             "[SPARX BWK LOGS]\n[START TIME] {0}\n--- [SETTINGS] --- \n[USER] {1}\n[PASSWORD] {2}\n["
             "AUTOCONTINUE] {3}\n[AUTOBWC] {4}\n[VERSION] {5}\n--- [WORK LOGS] --- \n".format(
                 FILE_NAME, info.USERNAME, info.PASSWORD, str(info.autocontinue), str(info.autobwk), info.VERSION))
         f.close()
-        log("[LOG] Writing New Log")
-        log("[LOG] New Log Made [NAME] " + FILE_NAME)
+        log(tags.log + "Writing New Log")
+        log(tags.log + "New Log Made [NAME] " + FILE_NAME)
         return
     except:
-        log("[ERROR] 2 - FAILED TO WRITE LOG")
+        log(tags.error + "FAILED TO WRITE LOG")
         return
 
 
 def start():
-    print("By Gwyd0  VERSION." + info.VERSION)
+    print(bcolors.OKBLUE + "By Gwyd0  VERSION." + info.VERSION + bcolors.ENDC)
     if not loadsettings():  # if loadsettings returns false then savesettings for next time.
         savesettings()
 
     makelogfile()
-    log("[MAIN] If Chrome fails to open. Install the newest version of Chromedriver.")
+    log(tags.main + "If Chrome fails to open. Install the newest version of Chromedriver.")
     DRIVER = webdriver.Chrome(info.PATH)
     DRIVER.get(
         "https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=ad6ebaa5-6e59-4e31-9840-d14daad3bf03&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback&response_type=code&scope=openid+profile+email&state=aEeScyZU4UJbK7UwJ9lVwQRFTPfTAQDFPqgngzPBR2GMxzlTw0lrajfG85yGLaCKyB0bOQxuLDCSSoccNiDnHdNkkAvbL6zYMc21Q8UOMAILV60eRzCmAkI5EuMxywmaxejArNkS4CK0l85omVBvDjBXpJMbNlTb0j6UPajHd4z8EnpTXmC6jD-KbDSLbU-ykoN_dt8k26joQJSq9dls8u4XczPi5RvfC81y8KNSIfxXDOjKdYgXuCObo1gYNUdPcww%3D")
@@ -110,14 +130,14 @@ def start():
     PASSWORD_ELEMENT.send_keys(info.PASSWORD)
     PASSWORD_ELEMENT.send_keys(Keys.RETURN)
 
-    log("[MAIN] Chrome Version: " + str(DRIVER.capabilities['browserVersion']))
-
+    log(tags.main + "Chrome Version: " + str(DRIVER.capabilities['browserVersion']))
+    print(bcolors.OKBLUE + "------------------ BOOKWORK CODES ------------------" + bcolors.ENDC)
     try:
         mainloop(DRIVER)
     except:
-        log("[MAIN] Chrome Closed. Exiting.")
+        print(bcolors.FAIL + "------------------ CHROME CLOSED ------------------" + bcolors.ENDC)
         info.isopen = False
-        input("Exit to continue.")
+        input(tags.error + "Exit to continue.")
         exit()
 
 
