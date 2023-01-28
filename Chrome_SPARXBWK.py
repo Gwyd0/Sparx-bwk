@@ -99,9 +99,10 @@ def get_auth_url():
     response = response.json()["matches"]
     if len(response) == 0:
         return False
-    else:
-        return "https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=" + response[0]["school"]["school_id"] + "&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback&response_type=code&scope=openid+profile+email&state=Fsb04bwAyXGRuvFksrtO-QqR5XU_rswZ2YI4jjAXyIjuKfs5GN1RzzFz40FYmyiuUksh2SoOVWeBYNk_1LZWy2FjPgJyKalJyAF-HiZhyhhLP3PNW2vx1jKAVLbFWl0eYNZ20jcUB83M687pYzcPxxuj0kyqyr3VdEfKui1LliaJHZFFd857NAX-PrDGbEOC4S-tug48z9PTmUZ2PA0VkF2Y0lNDbcNeZx8lh5c5dJMKfYNRiK3Zta07zgihjWUZzbs3mVObYD0%3D"
-
+    else: #%2F
+        req = requests.get(f"https://www.sparxmaths.uk/?forget=1&estab_id={response[0]['school']['school_id'].replace('/', '%2F')}&remember=on")
+        return req.json()["URL"]
+    
 def start():
     print("By Gwyd0  VERSION." + info.VERSION)
     if not loadsettings():  # if loadsettings returns false then savesettings for next time.
