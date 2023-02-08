@@ -121,7 +121,7 @@ def start():
     log(tags.main + "If Chrome fails to open. Install the newest version of Chromedriver.")
     DRIVER = webdriver.Chrome(info.PATH)
     DRIVER.get(
-        "https://auth.sparxmaths.uk/oauth2/auth?client_id=sparx-maths-sw&hd=ad6ebaa5-6e59-4e31-9840-d14daad3bf03&redirect_uri=https%3A%2F%2Fstudentapi.api.sparxmaths.uk%2Foauth%2Fcallback&response_type=code&scope=openid+profile+email&state=aEeScyZU4UJbK7UwJ9lVwQRFTPfTAQDFPqgngzPBR2GMxzlTw0lrajfG85yGLaCKyB0bOQxuLDCSSoccNiDnHdNkkAvbL6zYMc21Q8UOMAILV60eRzCmAkI5EuMxywmaxejArNkS4CK0l85omVBvDjBXpJMbNlTb0j6UPajHd4z8EnpTXmC6jD-KbDSLbU-ykoN_dt8k26joQJSq9dls8u4XczPi5RvfC81y8KNSIfxXDOjKdYgXuCObo1gYNUdPcww%3D")
+        "https://westexe.sparxmaths.uk")
 
     USERNAME_ELEMENT = DRIVER.find_element(By.ID, "username")
     PASSWORD_ELEMENT = DRIVER.find_element(By.ID, "password")
