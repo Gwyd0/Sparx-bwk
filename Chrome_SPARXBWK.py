@@ -6,14 +6,14 @@ from datetime import datetime
 import time
 import json
 
-
 FILE_NAME = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
+
 
 class info:
     USERNAME = ""
     PASSWORD = ""
     PATH = 'chromedriver.exe'  # path to chromedriver
-    VERSION = '1.3 - Gecko'
+    VERSION = '1.4 - Chrome'
 
     lastMsg = ""
     isOpen = True
@@ -22,7 +22,7 @@ class info:
     OnLogin = False
 
 
-def log(message): #writes to txt
+def log(message):  # writes to txt
     if info.lastMsg == message or len(message) < 34:
         return
     else:
@@ -43,32 +43,40 @@ def log(message): #writes to txt
 def saveSettings():
     info.USERNAME = input("[SETTINGS] Please enter your sparx username: ")
     info.PASSWORD = input("[SETTINGS] Please enter your sparx password: ")
+
     INPUT1 = input("[SETTINGS] Do You want Autocontinue On? (skips games): ").casefold()
-    INPUT2 = input("[SETTINGS] Do You want Autobwk On? (Does Bookwork CODES may fail): ").casefold()
+    INPUT2 = input("[SETTINGS] Do You want Autobwk On? (This is disabled cos of fractions. Blame sparx.): ").casefold()
     INPUT3 = input("[SETTINGS] Save Settings?: ").casefold()
 
-    if INPUT1 == "true" or INPUT1 == "yes":
+    if INPUT1 == "true" or INPUT1 == "yes" or INPUT1 == "y":
         info.AutoContinue = True
-        print("[SETTINGS] autocontinue enabled")
-    if INPUT2 == "true" or INPUT2 == "yes":
+    if INPUT2 == "true" or INPUT2 == "yes" or INPUT2 == "y":
         info.AutoBWK = True
-        print("[SETTINGS] autobwk enabled")
-    if INPUT3 == "true" or INPUT3 == "yes":
+    if INPUT3 == "true" or INPUT3 == "yes" or INPUT3 == "y":
         print("[SETTINGS] saving settings. This may take some time")
 
         data = {'settings': [
             {'USERNAME': info.USERNAME, 'PASSWORD': info.PASSWORD, 'acon': info.AutoContinue, 'abwk': info.AutoBWK}]}
-        with open('../../Desktop/Sparx-bwk-main - Copy/Sparx-bwk-main/Logs/settings.json', 'w') as outfile:
-            json.dump(data, outfile)
-        return
+        try:
+            with open('Logs/settings.json', 'w') as outfile:
+                json.dump(data, outfile)
+            return
+
+        except FileNotFoundError:
+            print(
+                "--------\n[Error] Failed writing settings. Make sure the there is a folder called 'Logs' in the same folder "
+                "as the .exe")
+            input()
+            exit()
     else:
-        print("[Error] Invalid argument")
+        print("[Error] Invalid argument use 'y' or 'Yes'\nPress any button to exit.")
+        input()
         exit()
 
 
 def loadSettings():
     try:
-        with open('../../Desktop/Sparx-bwk-main - Copy/Sparx-bwk-main/Logs/settings.json') as json_file:
+        with open('Logs/settings.json') as json_file:
             data = json.load(json_file)
             print("[SETTINGS] Loading settings. This may take some time")
             info.USERNAME = data['settings'][0]['USERNAME']
@@ -98,7 +106,7 @@ def makeLogFile():
 
 
 def start():
-    print("By Gwyd0  VERSION." + info.VERSION)
+    print("-------------------------------\nSPARXBWK\n-------------------------------\nBy Gwyd0  VERSION." + info.VERSION + "\n")
     if not loadSettings():  # if loadsettings returns false then savesettings for next time.
         saveSettings()
 
@@ -123,7 +131,8 @@ def start():
         except:
             d = 1
 
-    log("[MAIN] Chrome Version: " + str(DRIVER.capabilities['browserVersion']) + "\n[MAIN] If Chrome fails to open. install the newest version of geckodriver.\n------------------ BOOKWORK CODES ------------------")
+    log("[MAIN] Chrome Version: " + str(DRIVER.capabilities[
+                                            'browserVersion']) + "\n[MAIN] If Chrome fails to open. install the newest version of geckodriver.\n------------------ BOOKWORK CODES ------------------")
 
     try:
         mainloop(DRIVER)
@@ -161,6 +170,6 @@ def mainloop(driver):
             except:
                 d = 1
 
+
 if __name__ == '__main__':
     start()
-
