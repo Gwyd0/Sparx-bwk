@@ -2,27 +2,46 @@
 **Sparx-Bookwork-Code** is a project I've been working on for about a year (mostly as a hobby and because I'm lazy).
 
 
-It's a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/en/knowledge/what-is-a-bookwork-check-and-why-are-they-used-in-sparx)). It uses chrome driver (Google Chrome) to grab the values of answers and codes. I use python as it's my main language and is quite easy to understand.
+It's a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/docs/what-are-bookwork-checks)). It uses chrome driver (Google Chrome) to grab the values of answers and codes. I use python as it's my main language and is quite easy to understand.
 
 As I have stopped using Sparx, it's no use to me any more, so having it here may help anybody who wants to automate their Sparx maths homework.
 
 ## Basic features
 * Auto fills in password + username
 * Logs codes for every question
-* Auto does bookwork checks.
-* Creates a full backup log as a .txt in /logs
+* Auto does bookwork checks. (Currently reworking it)
+* Creates a full backup log of every question as a .txt in /Logs
 
-## Setup
-This only works for **chrome,** so make sure you have **chrome installed**.
-### Windows
-* Clone the repo and run the .exe
-* Make Sure that the .exe or .py file are in the same directory as the **Logs** file, if not the .exe/.py should create one.
-You may have to update Chrome driver, as explained below.
+## Setup Step by Step
+### Step 1: Install Chrome
+This is mainly dedicated to chrome. Other web browsers are too much work to keep up to date, so make sure you have Chrome installed.
+Once Chrome is installed, you need to figure out what version it is (Chromedriver is very picky about versions).
+
+First, navigate to the three dots in the top right.
+then go to
+Settings > About Chrome (it's at the bottom) and look at the version.
+
+Then go to [here](https://chromedriver.chromium.org/downloads) and download the version you have.
+
+### Step 2: Download Repo
+Next, click [here](https://github.com/Gwyd0/Sparx-bwk/archive/refs/heads/main.zip). This should download the rest of the files you need.
+* First, right-click the file and click "Extract All."
+Next, open the extracted file and open Sparx-bwk-main.
+* Place the chromedriver file you downloaded in step 1 in the file; it should be in the same file as the.exe and readme.md.
+
+### Step 3: Run the file.
+Your folder should look something like this:
+Now run the.exe called "BWK-CHROME.
+Windows may come up with this; just click "more info." Run anyway.
+
+Type in the details, and you're done. Chrome should open, and your bookwork codes should be logged for you.
+
 
 ## Bugs
 * Chrome driver needs updating about twice every month, you can download it [here](https://chromedriver.chromium.org/downloads), Download the same version
 as your browser. Then place chromedriver.exe in the same directory as the .exe or .py
 * Sometimes Auto bookwork checks may not work (due to how fractions are displayed). 
+* Bug where window wont close without crashing (fixing this soon)
 ## Why so many try and excepts?
 If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is because of **Selenium Webdriver**.
 
