@@ -33,7 +33,7 @@ Next, open the extracted file and open Sparx-bwk-main.
 ![capture1](https://raw.githubusercontent.com/Gwyd0/Sparx-bwk/main/Images/Capture2.PNG?raw=True) <br>
 Your folder should look something like that
 Now run the.exe called "BWK-CHROME.
-Windows may come up with this; just click "more info." Run anyway.
+Windows may come up with a error just click, "more info." > Run anyway (if you dont think the code is safe you can look at it [here](https://github.com/Gwyd0/Sparx-bwk/blob/main/Chrome_SPARXBWK.py))
 
 Type in the details, and you're done. Chrome should open, and your bookwork codes should be logged for you.
 ![capture1](https://raw.githubusercontent.com/Gwyd0/Sparx-bwk/main/Images/Capture1.PNG?raw=True) <br>
