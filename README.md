@@ -4,7 +4,7 @@
 
 It's a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/docs/what-are-bookwork-checks)). It uses chrome driver (Google Chrome) to grab the values of answers and codes. I use python as it's my main language and is quite easy to understand.
 
-As I have stopped using Sparx, it's no use to me any more, so having it here may help anybody who wants to automate their Sparx maths homework.
+Having it here may help anybody who wants to somewhat automate their Sparx maths homework. (or just hates writing bookwork codes)
 
 ## Basic features
 * Auto fills in password + username
