@@ -2,7 +2,7 @@
 **Sparx-Bookwork-Code** is a project I've been working on for about a year (mostly as a hobby and because I'm lazy).
 
 
-It's a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/docs/what-are-bookwork-checks)). It uses chrome driver (Google Chrome) to grab the values of answers and codes. I use python as it's my main language and is quite easy to understand.
+It's a web scraper to log Bookwork codes for Sparx and auto completes Bookwork checks (explained [here](https://support.sparx.co.uk/docs/what-are-bookwork-checks)). It uses chrome driver (Google Chrome) and now geckodriver (Firefox) to grab the values of answers and codes. I use python as it's my main language and is quite easy to understand.
 
 Having it here may help anybody who wants to somewhat automate their Sparx maths homework. (or just hates writing bookwork codes)
 
@@ -14,7 +14,7 @@ Having it here may help anybody who wants to somewhat automate their Sparx maths
 
 ## Setup Step by Step
 ### Step 1: Install Chrome
-This is mainly dedicated to chrome. Other web browsers are too much work to keep up to date, so make sure you have Chrome installed.
+This is mainly dedicated to chrome (even though I have a Firefox version). Other web browsers are too much work to keep up to date, so make sure you have Chrome installed.
 Once Chrome is installed, you need to figure out what version it is (Chromedriver is very picky about versions).
 
 First, navigate to the three dots in the top right.
@@ -55,3 +55,5 @@ try:
 except:
 ```
 And... as I check for multiple elements, the result is a lot of try-excepts.
+## Whats Gecko?
+I mainly use Linux, but when I developed this, I was still mostly using Windows, where I used Chrome mainly. When switching to Linux, I started mostly using Firefox. So instead of having two browsers installed, I started development on a *Firefox* version of *Sparxbwk*. Similar to Chrome and Chromedriver Firefox has a geckodriver, hence the name gecko. If you are going to use this tool, I suggest using Chrome, as that's generally in a better state than Gecko. I tend to test things and features on the Firefox version rather than Chrome, but both should work.
