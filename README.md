@@ -43,6 +43,7 @@ Type in the details, and you're done. Chrome should open, and your bookwork code
 as your browser. Then place chromedriver.exe in the same directory as the .exe or .py
 * Sometimes Auto bookwork checks may not work (due to how fractions are displayed). 
 * Bug where window wont close without crashing (fixing this soon)
+* mostly needs polish. I also want to create a custom gui for finding bookwork codes.
 ## Why so many try and excepts?
 If you can be bothered to read my code. You might notice the amount of try: and excepts there are, this is because of **Selenium Webdriver**.
 
