@@ -1,35 +1,37 @@
-import os
+import selenium
 
-import selenium.common.exceptions
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service as FirefoxService, Service
-
-from selenium.webdriver.firefox.options import Options as Firefox_Options
 from datetime import datetime
 import time
 import json
 
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options as Firefox_Options
+from selenium.webdriver.chrome.service import Service
+
 FILE_NAME = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
+
 
 class info:
     USERNAME = ""
     PASSWORD = ""
-    PATH = '/usr/local/bin/'  # path to chromedriver
-    VERSION = '1.3 - Gecko'
+    PATH = '/usr/local/bin/geckodriver'  # path to geckodriver
+    VERSION = '1.4.4 - Gecko'
 
-    lastMsg = ""
     isOpen = True
     AutoContinue = False
     AutoBWK = False
     OnLogin = False
 
+    tmp_messages = ["placeholder","placeholder","placeholder"]
 
-def log(message): #writes to txt
-    if info.lastMsg == message or len(message) < 34:
+
+def log(message):  # writes to txt
+    if info.tmp_messages[-1] == message or info.tmp_messages[-2] == message or info.tmp_messages[-3] == message:  # this is quicker than going through the entire thing.
+        return
+    elif message.__contains__("BWK") and len(message) < 35:
         return
     else:
         t = time.localtime()
@@ -39,36 +41,45 @@ def log(message): #writes to txt
             f.write("{0} {1} \n".format(str(current_time), str(message)))
             f.close()
         except:
-            log("[ERROR] 3 - Failed to log")
+            d = 12 # placeholder
 
         print(current_time + message)
-        info.lastMsg = message
+        info.tmp_messages.append(message)
         return
 
 
 def saveSettings():
     info.USERNAME = input("[SETTINGS] Please enter your sparx username: ")
     info.PASSWORD = input("[SETTINGS] Please enter your sparx password: ")
+
     INPUT1 = input("[SETTINGS] Do You want Autocontinue On? (skips games): ").casefold()
-    INPUT2 = input("[SETTINGS] Do You want Autobwk On? (Does Bookwork CODES may fail): ").casefold()
+    INPUT2 = input("[SETTINGS] Do You want Autobwk On? (This is disabled cos of fractions. Blame sparx.): ").casefold()
     INPUT3 = input("[SETTINGS] Save Settings?: ").casefold()
 
-    if INPUT1 == "true" or INPUT1 == "yes":
+    if INPUT1 == "true" or INPUT1 == "yes" or INPUT1 == "y":
         info.AutoContinue = True
-        print("[SETTINGS] autocontinue enabled")
-    if INPUT2 == "true" or INPUT2 == "yes":
+    if INPUT2 == "true" or INPUT2 == "yes" or INPUT2 == "y":
         info.AutoBWK = True
-        print("[SETTINGS] autobwk enabled")
-    if INPUT3 == "true" or INPUT3 == "yes":
-        print("[SETTINGS] saving settings. This may take some time")
+    if INPUT3 == "true" or INPUT3 == "yes" or INPUT3 == "y":
+        print("[SETTINGS] Saving settings. This may take some time")
 
         data = {'settings': [
             {'USERNAME': info.USERNAME, 'PASSWORD': info.PASSWORD, 'acon': info.AutoContinue, 'abwk': info.AutoBWK}]}
-        with open('Logs/settings.json', 'w') as outfile:
-            json.dump(data, outfile)
-        return
+        try:
+            with open('Logs/settings.json', 'w') as outfile:
+                json.dump(data, outfile)
+            return
+
+        except FileNotFoundError:
+            print(
+                "--------\n[Error] Failed writing settings. Make sure the there is a folder called 'Logs' in the same "
+                "folder"
+                "as the .exe")
+            input()
+            exit()
     else:
-        print("[Error] Invalid argument")
+        print("[Error] Invalid argument use 'y' or 'Yes'\nPress any button to exit.")
+        input()
         exit()
 
 
@@ -104,7 +115,8 @@ def makeLogFile():
 
 
 def start():
-    print("By Gwyd0  VERSION." + info.VERSION)
+    print(
+        "-------------------------------\nSPARXBWK\n-------------------------------\nBy Gwyd0  VERSION " + info.VERSION + "\n")
     if not loadSettings():  # if loadsettings returns false then savesettings for next time.
         saveSettings()
 
@@ -113,7 +125,7 @@ def start():
     firefox_options = Firefox_Options()
     firefox_options.binary_location = r'/usr/bin/firefox'
 
-    driverService = Service('/usr/local/bin/geckodriver')
+    driverService = Service(info.PATH) #/usr/local/bin/geckodriver
     DRIVER = webdriver.Firefox(service=driverService, options=firefox_options)
 
     DRIVER.get(
@@ -130,17 +142,17 @@ def start():
 
             info.OnLogin = True
 
-        except selenium.common.exceptions.NoSuchElementException:
+        except:
             d = 1
-
-    log("[MAIN] Firefox Version: " + str(DRIVER.capabilities['browserVersion']))
-    log("[MAIN] If Firefox fails to open. install the newest version of geckodriver.")
+    log("[MAIN] Firefox Version: " + str(DRIVER.capabilities[
+                                            'browserVersion']) + "\n[MAIN] If Firefox fails to open. install the newest version of chromedriver.\n------------------ BOOKWORK CODES ------------------")
 
     try:
         mainloop(DRIVER)
     except:
-        log("[MAIN] Firefox Closed. Exiting.")
+        log("[MAIN] Firefox Closed. Exiting")
         info.isOpen = False
+        input()
         exit()
 
 
@@ -158,9 +170,8 @@ def mainloop(driver):
                     d = 9
                 try:
                     sl = driver.find_element(By.CLASS_NAME, 'selected')
-
-                    if sl.text != "" and not "answer" in sl.text:
-                        log("[BWK] " + BWK.text + " [ANSWER] " + sl.text)
+                    if sl.text != "" and not sl.text.__contains__("Select") and not sl.text.endswith("."):
+                        log("[BWK] " + BWK.text + " [ANSWER] " + sl.text.replace('\n', ''))
                 except:
                     if info.AutoContinue:
                         a = driver.find_element(By.CLASS_NAME, "button-text")
