@@ -1,3 +1,5 @@
+Note: This project is no longer being updated, please use [this](https://github.com/Gwyd0/Sparx-bwk-extention)
+
 # Sparx-BWK
 **Sparx-Bookwork-Code** is a project I've been working on for about a year (mostly as a hobby and because I'm lazy).
 
